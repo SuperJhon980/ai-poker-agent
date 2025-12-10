@@ -10,20 +10,16 @@ class DeckOfCards():
 
     # Creates a new shuffled deck
     def newDeck(self, hasJokers):
-        self.deck = []
+        self.deck = [i for i in range(52)]
         self.numOfCards = 52
-        for card in Card:
-            if card is not Card.JOKER:
-                for suit in Suit:
-                    if suit not in (Suit.RED, Suit.BLACK):
-                        self.deck.append(PlayingCard(card, suit))
 
         if hasJokers:
-            self.deck.append(PlayingCard(Card.JOKER, Suit.BLACK))
-            self.deck.append(PlayingCard(Card.JOKER, Suit.RED))
+            self.deck.append(52)
+            self.deck.append(53)
             self.numOfCards += 2
 
-        shuffle(self.deck)
+        #shuffle(self.deck)
+        print(self.deck)
         return
     
     # pops card and returns it. returns None if empty
@@ -35,43 +31,31 @@ class DeckOfCards():
         print("Deck is empty, cannot draw a card")
         return None
     
-# Card enum. Ace-Joker
-class Card(Enum):
-    ACE = 1
-    TWO = 2
-    THREE = 3
-    FOUR = 4
-    FIVE = 5
-    SIX = 6
-    SEVEN = 7
-    EIGHT = 8
-    NINE = 9
-    TEN = 10
-    JACK = 11
-    QUEEN = 12
-    KING = 13
-    JOKER = 14
 
-# Suit enum. Has Red and Black for jokers
-class Suit(Enum):
-    HEARTS = 1
-    DIAMONDS = 2
-    CLUBS = 3
-    SPADES = 4
-    RED = 5
-    BLACK = 6
+def printCard(card):
+    SUITS = ["Hearts", "Diamonds", "Clubs", "Spades"]
+    RANKS = ["Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"]
 
-@dataclass
-class PlayingCard:
-    card: Card
-    suit: Suit
+    if(card == 52):
+        print("Red Joker")
+    elif(card == 53):
+        print("Black Joker")
+    else:
+        suit = SUITS[card // 13]
+        rank = RANKS[card % 13]
+        print(rank, "of", suit)
+
+    
 
 
 def main():
     myDeck = DeckOfCards()
+    myDeck.newDeck(True)
     card = myDeck.drawCard()
     while card:
-        print(card.card.name, "of", card.suit.name)
         card = myDeck.drawCard()
+        printCard(card)
+        
+
 
 main()
