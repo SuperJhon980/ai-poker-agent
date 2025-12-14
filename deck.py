@@ -1,61 +1,61 @@
-from enum import Enum
 from random import shuffle
-from dataclasses import dataclass
-class DeckOfCards():
-    # Init Creates a new deck
+
+
+class DeckOfCards:
+    # Init creates a new deck
     def __init__(self):
         self.deck = []
-        self.numOfCards = 0
-        self.newDeck(False)
+        self.num_of_cards = 0
+        self.new_deck(False)
 
     # Creates a new shuffled deck
-    def newDeck(self, hasJokers):
+    def new_deck(self, has_jokers):
         self.deck = [i for i in range(52)]
-        self.numOfCards = 52
+        self.num_of_cards = 52
 
-        if hasJokers:
+        if has_jokers:
             self.deck.append(52)
             self.deck.append(53)
-            self.numOfCards += 2
+            self.num_of_cards += 2
 
-        #shuffle(self.deck)
-        print(self.deck)
-        return
-    
-    # pops card and returns it. returns None if empty
-    def drawCard(self):
-        if self.numOfCards > 0:
-            self.numOfCards -= 1
+        shuffle(self.deck)
+
+    # Pops card and returns it. Returns None if empty
+    def draw_card(self):
+        if self.num_of_cards > 0:
+            self.num_of_cards -= 1
             return self.deck.pop()
-        
+
         print("Deck is empty, cannot draw a card")
         return None
-    
 
-def printCard(card):
+
+def print_card(card):
     SUITS = ["Hearts", "Diamonds", "Clubs", "Spades"]
-    RANKS = ["Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"]
+    RANKS = [
+        "Two", "Three", "Four", "Five", "Six", "Seven",
+        "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace"
+    ]
 
-    if(card == 52):
+    if card == 52:
         print("Red Joker")
-    elif(card == 53):
+    elif card == 53:
         print("Black Joker")
     else:
         suit = SUITS[card // 13]
         rank = RANKS[card % 13]
         print(rank, "of", suit)
 
-    
 
+def test():
+    my_deck = DeckOfCards()
+    my_deck.new_deck(True)
 
-def main():
-    myDeck = DeckOfCards()
-    myDeck.newDeck(True)
-    card = myDeck.drawCard()
+    card = my_deck.draw_card()
     while card:
-        card = myDeck.drawCard()
-        printCard(card)
-        
+        print_card(card)
+        card = my_deck.draw_card()
 
 
-main()
+if __name__ == "__main__":
+    test()
